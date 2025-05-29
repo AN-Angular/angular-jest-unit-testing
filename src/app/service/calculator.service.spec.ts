@@ -1,13 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CalculatorService } from './calculator.service';
+import { LoggerService } from './logger/logger.service';
 
 describe('CalculatorService', () => {
   let service: CalculatorService;
+  let loggerService: LoggerService
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CalculatorService);
+
+    // Create an instance of LoggerService
+    // This is necessary because CalculatorService depends on LoggerService
+    loggerService = new LoggerService();
+    service = new CalculatorService(loggerService);
+
+    // Alternatively, you can use TestBed.inject(LoggerService) if you want to use the TestBed's dependency injection
+    // calculatorService = TestBed.inject(CalculatorService);
+    
   });
 
   it('should be created', () => {
@@ -48,7 +58,7 @@ describe('CalculatorService', () => {
     const result = service.divideNumbers(20, 10);
     expect(typeof result).toBe('number');
   });
-  
+
   it('should divide two numbers', () => {
     const result = service.divideNumbers(20, 10);
     expect(result).toBe(2);
