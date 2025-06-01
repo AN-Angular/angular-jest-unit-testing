@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CalculatorService } from './calculator.service';
-import { LoggerService } from './logger/logger.service';
+import { LoggerService } from '../logger/logger.service';
 
 describe('CalculatorService', () => {
   let service: CalculatorService;
@@ -13,11 +13,12 @@ describe('CalculatorService', () => {
     // Create an instance of LoggerService
     // This is necessary because CalculatorService depends on LoggerService
     loggerService = new LoggerService();
+    // spyOn(loggerService, 'log'); // Spy on the log method to track its calls
     service = new CalculatorService(loggerService);
 
     // Alternatively, you can use TestBed.inject(LoggerService) if you want to use the TestBed's dependency injection
     // calculatorService = TestBed.inject(CalculatorService);
-    
+
   });
 
   it('should be created', () => {
@@ -27,6 +28,7 @@ describe('CalculatorService', () => {
   it('should return a number when adding', () => {
     const result = service.addNumbers(10, 20);
     expect(typeof result).toBe('number');
+    // expect(loggerService.log).toHaveBeenCalledTimes(1); // Check if the log method was called
   });
 
   it('should add two numbers', () => {
